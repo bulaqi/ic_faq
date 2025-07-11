@@ -1,0 +1,23 @@
+{signal: 
+  [
+    {name: 'clk', wave: 'p................'},
+    {name: 'DPC_Interrupt', wave: '1.....0..........'}, 
+    {name: 'hp_perst', wave: '1......0.........',node: '.......a.....'},      
+    {name: 'hp_refclk_en', wave: '0.........1......',node: '..........b'},   
+    {name: 'hp_pwr_en', wave: '1.............0..',node: '..............c'},      
+    {name: 'hp_pwr_led', wave: '1..............0.'},             
+  ],   
+    
+  edge: [
+    'a~->b 100us', 'b~->c 100us'
+  ],
+ 
+  head:{
+   text:'DPC热移除：Hot-Removal with DPC',
+   tick:0,
+  },
+ 
+  config: { hscale: 1 }
+ 
+  }
+ 

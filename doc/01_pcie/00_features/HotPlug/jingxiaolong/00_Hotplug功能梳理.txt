@@ -1,0 +1,28 @@
+目前识别到的场景：
+
+正常热插拔 - 六种典型场景，依次做加法，基本流程不变
+普通插入 - 插入注意+MRL - 插入注意+机电锁
+普通移除 - 移除注意+MRL - 移除注意+机电锁 
+
+异常热插拔 - 两种典型场景
+意外热移除、DPC热移除，均是在"移除"步骤上增加了软件流程
+
+需要增加两个图：
+1.根据梳理异常热插拔 - 两种典型场景上电时序图；
+2.根据状态机图梳理的分场景流程图；
+
+整体框图：
+
+大部分在hotplug_ctrl中实现，通过AHB链接至CPU，再传递给其他模块。
+少部分功能，如：
+
+(1)MSG_SPLS，当前功能在225项目配置控制空间的pcie5_pexreg.v模块实现，需要提取
+
+(2)HotPlug INT，中断？？在MCPU处理？？
+
+(3)HotPlug PME，在PM中实现，通过hp_status报告给PM，只涉及插入唤醒。
+（配置空间传递信息 - PM的hot_plug_pme_evevt - PM通过pcie5_cfgrw传递HotPlug PME消息，同时让当前端口的Link State Power Management状态机从L2调回到L0，退出低功耗模式）
+
+function polling对hotplug的影响(拔掉和插入)，涉及VEP和跨芯片问题，包括软件流程。
+message问题再梳理，分类讨论，包是否经过MCPU处理
+是否使用MSI？

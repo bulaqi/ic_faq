@@ -1,0 +1,25 @@
+{signal: 
+  [
+    {name: 'clk', wave: 'p................'},
+    {name: 'SSR.Data Link Layer State Changed', wave: '0..1..........0..'},
+    {name: 'hp_prsnt', wave: '1....0...........'},
+    {name: 'LSR.Data Link Layer Link Active', wave: '1.....0..........'}, 
+    {name: 'hp_perst', wave: '1......0.........',node: '.......a.....'},      
+    {name: 'hp_refclk_en', wave: '0.........1......',node: '..........b'},   
+    {name: 'hp_pwr_en', wave: '1.............0..',node: '..............c'},      
+    {name: 'hp_pwr_led', wave: '1..............0.'},             
+  ],   
+    
+  edge: [
+    'a~->b 100us', 'b~->c 100us'
+  ],
+ 
+  head:{
+   text:'意外热移除：Surprise Hot-Removal with Hot-Plug Surprise',
+   tick:0,
+  },
+ 
+  config: { hscale: 1 }
+ 
+  }
+ 

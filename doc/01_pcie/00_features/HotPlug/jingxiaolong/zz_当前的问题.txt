@@ -1,0 +1,36 @@
+1.PCIE协议中，并无UP口不能进行热插拔的规定，那么，第一代225当时不支持热插拔的历史原因？
+
+2.按照PLDA手册，热插拔会上报中断，但是在第一代225中似乎没有相关逻辑支持？
+
+3.假设存在两种场景：
+（1）上电时RC未开始工作（未通电），只有SW，后续RC开始工作，此时的枚举过程？
+（2）直接拔掉RC，此时会发生什么？
+
+4.插卡会造成如下影响：
+不使能HP_PERST，取消复位状态
+使能HP_PWR_EN，插槽供电
+使能HP_REFCLK_EN，给时钟
+
+5.拔卡会造成如下影响：
+使能HP_PERST，进入复位状态
+不使能HP_PWR_EN，插槽断电
+使能HP_REFCLK_EN，关闭时钟
+
+6.中断向量表？
+
+7.需要关注的三种中断/消息上报：
+HotPlug INT/HotPlug SPLS/HotPlug PME的传递过程：
+
+(1)HotPlug INT 
+
+(2)MSG_SPLS，当前功能在225项目配置控制空间的pcie5_pexreg.v模块实现。
+PME消息需要DSP - USP -RC的传递过程， 隐式路由????
+
+(3)HotPlug PME，在PM中实现，通过hp_status报告给PM，只涉及插入唤醒。
+（配置空间传递信息 - PM的hot_plug_pme_evevt - PM通过pcie5_cfgrw传递HotPlug PME消息，同时让当前端口的Link State Power Management状态机从L2调回到L0，退出低功耗模式）
+PME消息需要DSP - USP -RC的传递过程， 隐式路由
+
+8.树哥分析的HOTPLUG关键问题描述：
+ISO MODE下的SW，DN口桥接了REAL MODE的SW，应该如何预留BUS号，使得插卡后枚举过程尽量简单？
+（不接受全局重枚举？）
+这个问题是否和REAL模式下，使用fanout等效？
