@@ -47,6 +47,8 @@ git add  .    git commit --amend    git push origin HEAD:refs/for/master  //第�
 10. gitk //git图形化界面
 11. git checkout tag_name // 根据tag 更新，可能会提示你当前处于一个“detached HEAD" 状态。 tag 相当于是一个快照，是不能更改它的代码的。
 12. git checkout -b branch_name tag_name //如果要在 tag 代码的基础上做修改，你需要一个分支
+13. git tag -d <your_tag_name> //删除本地tag标签
+13. git push --delete origin <your_tag_name> //删除远程仓库的标签
 13. 限制git commit 文件size，配置.git/hooks/pre-commit文件，hard-limit和soft-limi
 14. git remote -v //查看该文件夹所连接的远程仓库
 15. git difftool commit_id1 commit_id2 //  找到该文件后,重新commit_id,git difftool 对比
