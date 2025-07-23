@@ -40,27 +40,27 @@ git add  .    git commit --amend    git push origin HEAD:refs/for/master  //第�
 6. git stash VS  git stash pop
 7. git pull -r --autostash
 8. git show tag_name //查看该tag_name的信息
-9. git tag  aem_v1_0_relase  // 打tag
-9. git push origin aem_v1_0_relase// 上传tag,用git push 命令无法上传tag，#将tagname标签提交到服务器
-9. git tag -l //
-9. git fetch --tags  //只更新tags
-10. gitk //git图形化界面
-11. git checkout tag_name // 根据tag 更新，可能会提示你当前处于一个“detached HEAD" 状态。 tag 相当于是一个快照，是不能更改它的代码的。
-12. git checkout -b branch_name tag_name //如果要在 tag 代码的基础上做修改，你需要一个分支
-13. git tag -d <your_tag_name> //删除本地tag标签
-13. git push --delete origin <your_tag_name> //删除远程仓库的标签
-13. 限制git commit 文件size，配置.git/hooks/pre-commit文件，hard-limit和soft-limi
-14. git remote -v //查看该文件夹所连接的远程仓库
-15. git difftool commit_id1 commit_id2 //  找到该文件后,重新commit_id,git difftool 对比
-16. git diff <commit1> <commit2> 文件目录D  //同一个文件目录,不同commit_id 之间的差异
-17. git diff <commit1> -- 文件目录D  //--表示工作区,-- 和文件名 之间有一个 空格
-18. git diff -- 文件名   //查看具体某个文件 在工作区和暂存区之间的差异,-- 和文件名 之间有一个 空格
-19. git blame [filename]
-20. git reset --soft HEAD^  //回退已commit 但未push的
-21. git reset HEAD <fiel>   // 回退已经add,但是未commit的
-22. git config -–global log.decorate auto //git log 显示tag
-23. git checkout [<commit>]   //回退整个git仓库的文件，根据commit_id更新
-24. git checkout [<commit>] [--] <filepath>   // [--] 表示 – 是可选参数，用于指定后面跟着的参数只是文件路径，而不是branch分支名或者commit信息。
+10. git tag  aem_v1_0_relase  // 打tag
+11. git push origin aem_v1_0_relase// 上传tag,用git push 命令无法上传tag，#将tagname标签提交到服务器
+12. git tag -l //
+13. git fetch --tags  //只更新tags
+14. gitk //git图形化界面
+15. git checkout tag_name // 根据tag 更新，可能会提示你当前处于一个“detached HEAD" 状态。 tag 相当于是一个快照，是不能更改它的代码的。
+16. git checkout -b branch_name tag_name //如果要在 tag 代码的基础上做修改，你需要一个分支
+17. git tag -d <your_tag_name> //删除本地tag标签
+18. git push --delete origin <your_tag_name> //删除远程仓库的标签
+19. 限制git commit 文件size，配置.git/hooks/pre-commit文件，hard-limit和soft-limi
+20. git remote -v //查看该文件夹所连接的远程仓库
+21. git difftool commit_id1 commit_id2 //  找到该文件后,重新commit_id,git difftool 对比
+22. git diff <commit1> <commit2> 文件目录D  //同一个文件目录,不同commit_id 之间的差异
+23. git diff <commit1> -- 文件目录D  //--表示工作区,-- 和文件名 之间有一个 空格
+24. git diff -- 文件名   //查看具体某个文件 在工作区和暂存区之间的差异,-- 和文件名 之间有一个 空格
+25. git blame [filename]
+26. git reset --soft HEAD^  //回退已commit 但未push的
+27. git reset HEAD <fiel>   // 回退已经add,但是未commit的
+28. git config -–global log.decorate auto //git log 显示tag
+29. git checkout [<commit>]   //回退整个git仓库的文件，根据commit_id更新
+30. git checkout [<commit>] [--] <filepath>   // [--] 表示 – 是可选参数，用于指定后面跟着的参数只是文件路径，而不是branch分支名或者commit信息。
 ~~~
 
 ### 3. git 上库(autostash)
