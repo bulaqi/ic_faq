@@ -95,9 +95,13 @@
 
 ##### 3.3 TLP中的ST字段
 1. **存储器写请求无需Tag字段**，因此在存储器写请求中，原Tag字段用作ST[7:0]字段(图3)；
-2. 在存储器读请求中，原Last BE、First DW字段被用作 ST[7:0]字段(图4)。
+2. 特别注意：在**存储器读请求中，原Last BE、First DW字段被用作 ST[7:0]字段**(图4)。
     - ![](./99_img/Snipaste_2025-07-28_14-38-26_location_st_in_mem_req.png)
 3. 考虑到部分存储器读请求仍然需要BE、DW字段来进行边界对齐，因此ST字段仅用于无需边界对齐的请求事务。
+- Mem_rd_req,Byte Enable 隐含以下值
+    1. 请求的Length为1,则FBE的值隐含为1111b,LBE的值隐含为0000b -->只有1个DW，且4个字节都有效，因为只有1个DW，所以LBE都是0
+    2. 请求的Length请求的数据大于1,FBE和LBE的值隐含为1111b --> 天然DW对齐
+
 4. ST字段有16bit，一般采用上述ST[7:0]可以提供255个(0表示No ST Mode，不计入)不同的ST，足以满足绝大部分需求。
 5. 若有意采用更宽位宽的ST，可以在TLP Header前添加TLP Prefix(参考链接)，采用TLP Prefix的Byte1作为`ST[15:8]`(图5)。
     - ![](./99_img/Snipaste_2025-07-28_15-57-51_tph_tlp_prefix.png)

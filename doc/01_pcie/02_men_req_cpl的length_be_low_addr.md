@@ -2,7 +2,7 @@
 #### 1. req
 ![](./99_img/Snipaste_2025-07-03_14-36-40.png)
 0. tag
-    - 注意mem_rd,mem_wr都有tag
+    - 注意：只有mem_rd 才有tag，mem_wr包tag的位置值ST[7:0]
     - 个人理解:wr是post, 无需Tag字段,原Tag字段用作ST[7:0]字段
         - ![](./99_img/Snipaste_2025-07-28_14-38-26_location_st_in_mem_req.png)
 1. Length
@@ -14,6 +14,14 @@
     - 不同报文中length含义:
         - req_rd：从目标读取的数据长度；
         - req_wr：表示报文的DataPayload长度。
+3. bme/ST的位置
+    - TH=0：不开启Processing Hints  
+        - req_rd: wd1[15:8]->tag             , dw1[7:0]-> fbe,lbe
+        - req_wr: wd1[15:8]->rsv,可以完全随机 , dw1[7:0]-> fbe,lbe
+    - TH=1：开启Processing Hints  
+        - req_rd: wd1[15:8]->tag(keep)       , dw1[7:0]-> st[7:0] (changed)(fbe,lbe为隐含值)
+        - req_wr: wd1[15:8]->st[7:0](changed), dw1[7:0]-> fbe,lbe（keep）
+    - 总结：req_wr,req_rd在开启TH后域段功能都发生变化，且rd/wr变化的域段不一致
 
 2. DW BE字段
     - TH字段==0(基础功能,常规模式)
@@ -44,7 +52,9 @@
             - ![](./99_img/Snipaste_2025-07-03_15-32-49.png)
 
     - TH字段==1(变形功能，支持Processing Hints特性的包)
-        - 适用: Mem_rd_req,Byte Enable字段被重新指定为携带ST[7:0]字段。
+        - 适用注意点: 
+            - Mem_rd_req,Byte Enable字段被重新指定为携带ST[7:0]字段，
+            - mem_WR: byte_enable字段不变，原先tag的位置为ST[7:0]
         - 此时,隐含的定义了 Byte Enable 的值
             ![](./99_img/Snipaste_2025-07-03_16-15-34.png)
         - 对于TH字段置1时，Mem_rd_req,Byte Enable 隐含以下值
