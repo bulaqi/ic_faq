@@ -1,31 +1,14 @@
-### 1. 基础知识
-
-#### 1. 概述
-1. 优化I/O设备对系统内存的访问效率。
-2. 允许PCIe设备直接参与地址转换过程，减少传统DMA操作中由IOMMU(I/O Memory Management Unit)或系统软件介入的开销，提升性能(虚拟化)
-
-#### 2. 基本概念说明
-1. TA & ATPA-->就是IOMMU
-2. EP可以发出AT=2'b00()，AT=2'b01(at req),AT=2'b10(at translated)
-3. 支持ATC的后的EP，也可能发出AT=2'b00的tlp包，该包在IOMMU处转换
-4. AT字段只对mem_req才效，cpl无效,tie为0
-5. 注意ATC的同步和，同步后发送translated men_req(AT=2'b10)是2个阶段
-6. ATC同步涉及的包：
-    - MEM: translation_req, translation complation
-    - MSG(必须)：page_invalidation_req,invalation_completion,
-    - MSG(可选)：page_req，page_response
-
-#### 2. ATS产生的背景
+#### 1. ATS产生的背景
 1. 在已开启IOMMU，但未启用ATS的虚拟机系统：
     1. PCIe设备发起DMA请求时使用物理地址(GPA)，但设备驱动通常使用虚拟地址(HPA)
     2. 过程示意图
         - ![](./99_img/Snipaste_2025-07-26_20-41-33_without_ats.png)
-    3. PS: ep发起的req,addr都是GPA,都需TA&ATPT转为HPA,才能访问真正的MEM
+    3. PS: ep发起的req,addr都是GPA,都需TA&ATPT转为HAP,才能访问真正的MEM
 2. 问题：
     - 每次DMA操作需通过IOMMU将虚拟地址(GPA)转换为物理地址(HPA)，产生额外延迟。
 3. 解决方案:在EP端实现IOMMU的转换，即ATS功能
 
-#### 3. 工作原理
+#### 2. 工作原理
 ##### 1. 概述
 1. 在EP端实现分布式的地址转换功能
     1. 首先需要在EP端有地址转换的相关表项,即ATC，该表的建立是EP通过发送Translation_req申请转换后的地址，RC通过translation completion tlp将转换地址同步给EP
@@ -91,17 +74,9 @@
     7. RC回复转换完成消息CplD给EP；
     8. EP采用转换后的地址完成访问。
     
-4. Page Request Message)
+4. Page Request Message
     - ![](./99_img/Snipaste_2025-07-28_12-24-51_page_req.png)
 5. PRG响应消息格式
     - ![](./99_img/Snipaste_2025-07-28_12-25-54_page_rsp.png)
     - ![](./99_img/Snipaste_2025-07-28_12-25-54_page_rsp_files.png)
 
-
-
-### 2. 经验总结
-
-### 3. 传送门
-1. [PCIe地址转换服务(ATS)详解](https://blog.csdn.net/weixin_40357487/article/details/120245027?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522372cc305f0695b7450e1f897f6fe764e%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fblog.%2522%257D&request_id=372cc305f0695b7450e1f897f6fe764e&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_ecpm_v1~rank_v31_ecpm-1-120245027-null-null.nonecase&utm_term=ATS&spm=1018.2226.3001.4450)
-2. [PCIe页请求服务](https://blog.csdn.net/weixin_40357487/article/details/121265623)
-3. [PCIe的ATS机制](https://zhuanlan.zhihu.com/p/411746688)
