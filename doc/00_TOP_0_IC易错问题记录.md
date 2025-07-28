@@ -1406,4 +1406,4 @@ foreach (arr[i])
 ### 120. 什么时候function/task 需要用automaitc修饰
 1. class中成员和方法默认为automatic动态的，program、module、interface、package中函数和任务和变量默认为静态的。
 2.  所以，不在类中定义的方法是static，如果要被多个函数调用，需要设置为automatic
-3. 传送门：[](https://blog.csdn.net/weixin_42294124/article/details/125493766)
+3. 传送门：https://blog.csdn.net/weixin_42294124/article/details/125493766
