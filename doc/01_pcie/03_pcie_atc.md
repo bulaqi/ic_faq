@@ -17,7 +17,7 @@
 
 #### 2. ATS产生的背景
 1. 在已开启IOMMU，但未启用ATS的虚拟机系统：
-    1. PCIe设备发起DMA请求时使用物理地址(GPA)，但设备驱动通常使用虚拟地址(HPA)
+    1. PCIe设备发起DMA请求时使用guest物理地址(GPA)，但设备驱动通常使用host物理地址(HPA)
     2. 过程示意图
         - ![](./99_img/Snipaste_2025-07-26_20-41-33_without_ats.png)
     3. PS: ep发起的req,addr都是GPA,都需TA&ATPT转为HPA,才能访问真正的MEM
